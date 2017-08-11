@@ -1,9 +1,18 @@
 package lambdas;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class StrategyDesignPattern {
 
   public static void main(String[] args) {
-   
+    List<Apple> inventory = Arrays.asList(new Apple(80, "green"), new Apple(155, "green"),
+        new Apple(120, "red"), new Apple(200, "dark red"), new Apple(220, "lite green"));
+    for(Apple apple : inventory){
+      apple.printApple(new AppleColorPrint());
+      apple.printApple(new AppleWeightPrint());
+      apple.printApple(new ApplePrettyPrint());
+    }
   }
 
 }
@@ -40,6 +49,11 @@ class Apple {
   public void setColor(String color) {
     this.color = color;
   }
+  
+  @Override
+  public String toString() {
+    return "Apple [weight=" + weight + ", color=" + color + "]";
+  }
 
   public void printApple(AppleFormatter formatter) {
     System.out.println(formatter.format(this));
@@ -47,4 +61,30 @@ class Apple {
 }
 interface AppleFormatter {
   public String format(Apple apple);
+}
+
+class AppleColorPrint implements AppleFormatter {
+  @Override
+  public String format(Apple apple) {
+    String s = apple.getColor() + " color apple";
+    return s;
+  }
+}
+
+class AppleWeightPrint implements AppleFormatter {
+  @Override
+  public String format(Apple apple) {
+    String s = "Apple thats weights : "+apple.getWeight()+" grams";
+    return s;
+  }
+}
+
+
+class ApplePrettyPrint implements AppleFormatter {
+  @Override
+  public String format(Apple apple) {
+    String s = "The apple is of " + apple.getColor() + " color, weighing " + apple.getWeight()
+        + " grams";
+    return s;
+  }
 }

@@ -13,6 +13,22 @@ public class StrategyDesignPattern {
       apple.printApple(new AppleWeightPrint());
       apple.printApple(new ApplePrettyPrint());
     }
+    for(Apple apple : inventory){
+      apple.printApple(new AppleFormatter(){
+
+        @Override
+        public String format(Apple apple) {
+          String appleType = null;
+          if(apple.getWeight()>150){
+            appleType = "good apple";
+          }else{
+            appleType = "bad apple";
+          }
+          return "Apple : "+apple.getWeight()+"grams. This is "+appleType;
+        }
+        
+      });
+    }
   }
 
 }
